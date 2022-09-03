@@ -3,11 +3,10 @@ import CDN from '../../Schemes/cdn';
 import { cdnInterface } from '../../Types/interfaces';
 import moment from 'moment';
 
-let response: Object[] = []
-
 export default async (req: Request, res: Response): Promise<Response> => {
     if (!req.body.Password || req.body.Password && req.body.Password != process.env.Password) return res.json({ error: 'Invalid Access.'})
 
+    let response: Object[] = []
     await CDN.find({}, async (err: Error, data: cdnInterface[]) => {
         if (data && data[0]) {
             await data.forEach(async e => {
