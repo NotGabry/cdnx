@@ -23,7 +23,7 @@ export default async (req: Request, res: Response) => {
                if (data.ID.split('.')[0] != name) break
             }
 
-            await res.json({ success: `Another file had the name [${req.body.ID}], the new file name is [${name}.${String(req.body.ID).split('.')[1] || req.body.FileExtention}]`, URL: `${process.env.CDN}/api/files/${name}.${String(req.body.ID).split('.')[1] || req.body.FileExtention}` })
+            await res.json({ success: `Another file had the name [${req.body.ID}], the new file name is [${name}.${String(req.body.ID).split('.')[1] || req.body.FileExtention}]`, URL: `${process.env.CDN}/files/${name}.${String(req.body.ID).split('.')[1] || req.body.FileExtention}` })
         } else {
             await CDN.create({
                 ID: name,
@@ -31,7 +31,7 @@ export default async (req: Request, res: Response) => {
                 Time: new Date().getTime()
             })
 
-            await res.json({ success: 'The file was uploaded.', URL: `${process.env.CDN}/api/files/${name}.${String(req.body.ID).split('.')[1] || req.body.FileExtention}` })
+            await res.json({ success: 'The file was uploaded.', URL: `${process.env.CDN}/files/${name}.${String(req.body.ID).split('.')[1] || req.body.FileExtention}` })
         }
     })
 }
