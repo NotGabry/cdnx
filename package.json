@@ -3,7 +3,7 @@
   "version": "0.2.8",
   "main": "src/main",
   "author": "NotGabry#3115",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "start": "node src/main",
     "build": "tsc",
