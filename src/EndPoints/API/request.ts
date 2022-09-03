@@ -10,7 +10,7 @@ export default async (req: Request, res: Response) => {
     if (!String(req.params.ID).includes('.')) return res.json({ error: 'Invalid ID.'})
 
     await CDN.findOne({
-        ID: String(req.params.ID).split('.')[0]
+        ID: String(req.params.ID)
     }, async (err: Error, data: cdnInterface) => {
         if (data) {
             await readFile(`./Data/${String(req.params.ID)}`, async (err: Error, data_: Buffer) => {
