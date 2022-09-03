@@ -22,7 +22,9 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 /* EndPoints */
-import RequestEndPoint from './EndPoints/API/request'
+import RequestEndPoint from './EndPoints/API/request';
 app.use('/files/:ID', async (req: Request, res: Response) => RequestEndPoint(req, res))
-import UploadEndPoint from './EndPoints/API/upload'
+import UploadEndPoint from './EndPoints/API/upload';
 app.post('/api/upload', async (req: Request, res: Response) => UploadEndPoint(req, res))
+import RootEndPoint from './EndPoints/Handlers/root';
+app.use('/', async (req: Request, res: Response) => RootEndPoint(req, res))
