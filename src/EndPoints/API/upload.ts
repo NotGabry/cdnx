@@ -23,6 +23,12 @@ export default async (req: Request, res: Response) => {
                if (data.ID != name) break
             }
 
+            await CDN.create({
+                ID: name,
+                Data: req.body.Data,
+                Time: new Date().getTime()
+            })
+            
             await res.json({ success: `Another file had the name [${req.body.ID}], the new file name is [${name}]`, URL: `${process.env.CDN}/files/${name}` })
         } else {
             await CDN.create({
