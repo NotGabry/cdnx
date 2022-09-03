@@ -24,7 +24,15 @@ app.use(bodyParser.urlencoded({ extended: true }))
 /* EndPoints */
 import RequestEndPoint from './EndPoints/API/request';
 app.use('/files/:ID', async (req: Request, res: Response) => RequestEndPoint(req, res))
+
 import UploadEndPoint from './EndPoints/API/upload';
 app.post('/api/upload', async (req: Request, res: Response) => UploadEndPoint(req, res))
+
+import ListEndPoint from './EndPoints/API/list';
+app.get('/api/list', async (req: Request, res: Response) => ListEndPoint(req, res))
+
+import DeleteEndPoint from './EndPoints/API/delete';
+app.delete('/api/delete', async (req: Request, res: Response) => DeleteEndPoint(req, res))
+
 import RootEndPoint from './EndPoints/Handlers/root';
 app.use('/', async (req: Request, res: Response) => RootEndPoint(req, res))

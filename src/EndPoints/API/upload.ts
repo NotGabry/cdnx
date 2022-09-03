@@ -3,7 +3,7 @@ import CDN from '../../Schemes/cdn';
 import { cdnInterface } from '../../Types/interfaces';
 let opts: String[] = ['custom', 'crypted']
 
-export default async (req: Request, res: Response) => {
+export default async (req: Request, res: Response): Promise<Response> => {
     if (!req.body.Password || req.body.Password && req.body.Password != process.env.Password) return res.json({ error: 'Invalid Access.'})
     if (!req.body.Data) return res.json({ error: 'Data Not Found.' })
     if (!req.body.TypeID) return res.json({ error: `Invalid ID Type. Valid IDs are ${opts.join(', ')}` })

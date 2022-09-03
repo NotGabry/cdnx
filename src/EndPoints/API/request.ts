@@ -5,7 +5,7 @@ import { cdnInterface } from '../../Types/interfaces';
 import path from 'node:path';
 
 
-export default async (req: Request, res: Response) => {
+export default async (req: Request, res: Response): Promise<Response> => {
     if (!req.params.ID) return res.json({ error: 'Path Not Found '})
     if (!String(req.params.ID).includes('.')) return res.json({ error: 'Invalid ID.'})
 
