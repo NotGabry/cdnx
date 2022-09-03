@@ -18,12 +18,12 @@ export default async (req: Request, res: Response) => {
     }, async (err: Error, data: cdnInterface) => {
         if (data) {
             while (true) {
-               if (data.ID == name) name = `${name}.${Math.random().toString(36).slice(2, 6)}` 
+               if (data.ID == name) name = `${Math.random().toString(36).slice(2, 6)}.${name}` 
 
                if (data.ID != name) break
             }
 
-            await res.json({ success: `Another file had the name [${req.body.ID}], the new file name is [${name}]`, URL: `${process.env.CDN}/files/${name}.${String(req.body.ID)}` })
+            await res.json({ success: `Another file had the name [${req.body.ID}], the new file name is [${name}]`, URL: `${process.env.CDN}/files/${name}` })
         } else {
             await CDN.create({
                 ID: name,
@@ -31,7 +31,7 @@ export default async (req: Request, res: Response) => {
                 Time: new Date().getTime()
             })
 
-            await res.json({ success: 'The file was uploaded.', URL: `${process.env.CDN}/files/${name}.${String(req.body.ID)}` })
+            await res.json({ success: 'The file was uploaded.', URL: `${process.env.CDN}/files/${name}` })
         }
     })
 }
