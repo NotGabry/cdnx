@@ -2,9 +2,10 @@ import { Request, Response } from 'express';
 import { unlinkSync } from 'node:fs';
 import CDN from '../../Schemes/cdn'
 import { cdnInterface } from '../../Types/interfaces';
+import Auth from '../Handlers/auth';
 
 export default async (req: Request, res: Response): Promise<Response> => {
-    if (!req.body.Password || req.body.Password && req.body.Password != process.env.Password) return res.json({ error: 'Invalid Access.'})
+    if (!await Auth(req)) return res.json({ error: 'Invalid Access.'})
     if (!req.query.all && !req.body.ID) return res.json({ error: 'Invalid ID.' })
 
     if (!req.query.all) {
@@ -20,7 +21,7 @@ export default async (req: Request, res: Response): Promise<Response> => {
         } else return res.json({ error: 'No Data Found.' })
     } else {
         await CDN.find({}, async (err: Error, data: cdnInterface[]) => {
-            if (data) {
+            if (data && data[0]) {
                 data.forEach(async e => {
                     await CDN.findOneAndDelete({ ID: e.ID })
                     try {
