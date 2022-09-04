@@ -9,16 +9,13 @@ export default async (req: Request, res: Response): Promise<Response> => {
     if (!req.params.ID) return res.json({ error: 'Path Not Found '})
     if (!String(req.params.ID).includes('.')) return res.json({ error: 'Invalid ID.'})
 
-    await CDN.findOne({
-        ID: String(req.params.ID)
-    }, async (err: Error, data: cdnInterface) => {
-        if (data) {
-            await readFile(`./Data/${String(req.params.ID)}`, async (err: Error, data_: Buffer) => {
-                if (err) {
-                    await writeFileSync(`./Data/${String(req.params.ID)}`, String(data.Data), { encoding: 'base64' })
-                    return res.sendFile(path.join(path.resolve('.'), 'Data', String(req.params.ID)))
-                } else res.sendFile(path.join(path.resolve('.'), 'Data', String(req.params.ID)))
-            })
-        } else return res.json({ error: 'No Data Found.'})
-    })
+    let data: cdnInterface = await CDN.findOne({ ID: String(req.params.ID) })
+    if (data) {
+        await readFile(`./Data/${String(req.params.ID)}`, async (err: Error, data_: Buffer) => {
+            if (err) {
+                await writeFileSync(`./Data/${String(req.params.ID)}`, String(data.Data), { encoding: 'base64' })
+                return res.sendFile(path.join(path.resolve('.'), 'Data', String(req.params.ID)))
+            } else res.sendFile(path.join(path.resolve('.'), 'Data', String(req.params.ID)))
+        })
+    } else return res.json({ error: 'No Data Found.'})
 }

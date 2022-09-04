@@ -14,31 +14,28 @@ export default async (req: Request, res: Response): Promise<Response> => {
     
     let name: string = String(req.body.TypeID) && String(req.body.TypeID) == 'custom' ? String(req.body.ID) : `${Math.random().toString(36).slice(2, 15)}${req.body.FileExtention}`
 
-    await CDN.findOne({
-        ID: req.body.ID
-    }, async (err: Error, data: cdnInterface) => {
-        if (data) {
-            while (true) {
-               if (data.ID == name) name = `${Math.random().toString(36).slice(2, 6)}.${name}` 
+    let data: cdnInterface = await CDN.findOne({ ID: req.body.ID })
+    if (data) {
+        while (true) {
+           if (data.ID == name) name = `${Math.random().toString(36).slice(2, 6)}.${name}` 
 
-               if (data.ID != name) break
-            }
-
-            await CDN.create({
-                ID: name,
-                Data: req.body.Data,
-                Time: new Date().getTime()
-            })
-            
-            await res.json({ success: `Another file had the name [${req.body.ID}], the new file name is [${name}]`, URL: `${process.env.CDN}/files/${name}` })
-        } else {
-            await CDN.create({
-                ID: name,
-                Data: req.body.Data,
-                Time: new Date().getTime()
-            })
-
-            await res.json({ success: 'The file was uploaded.', URL: `${process.env.CDN}/files/${name}` })
+           if (data.ID != name) break
         }
-    })
+
+        await CDN.create({
+            ID: name,
+            Data: req.body.Data,
+            Time: new Date().getTime()
+        })
+        
+        await res.json({ success: `Another file had the name [${req.body.ID}], the new file name is [${name}]`, URL: `${process.env.CDN}/files/${name}` })
+    } else {
+        await CDN.create({
+            ID: name,
+            Data: req.body.Data,
+            Time: new Date().getTime()
+        })
+
+        await res.json({ success: 'The file was uploaded.', URL: `${process.env.CDN}/files/${name}` })
+    }
 }
