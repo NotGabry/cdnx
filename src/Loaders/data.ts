@@ -1,4 +1,4 @@
-import { readdirSync, unlinkSync } from 'node:fs'
+import { readdirSync, unlink } from 'node:fs'
 
 export default async (): Promise<void> => {
     let hour: number = new Date().getHours()
@@ -7,7 +7,7 @@ export default async (): Promise<void> => {
     if (hour == 0 && minute == 0) {
         let files = await readdirSync('./Data')
         for (let file of files) {
-            await unlinkSync(`./Data/${file}`)
+            await unlink(`./Data/${file}`,  async () => {})
         }
     }
 }

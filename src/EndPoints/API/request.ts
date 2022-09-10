@@ -13,6 +13,8 @@ export default async (req: Request, res: Response): Promise<Response> => {
     if (data) {
         await readFile(`./Data/${String(req.params.ID)}`, async (err: Error, data_: Buffer) => {
             if (err) {
+                data.Cached = true
+                await data.save()
                 await writeFileSync(`./Data/${String(req.params.ID)}`, String(data.Data), { encoding: 'base64' })
                 return res.sendFile(path.join(path.resolve('.'), 'Data', String(req.params.ID)))
             } else res.sendFile(path.join(path.resolve('.'), 'Data', String(req.params.ID)))

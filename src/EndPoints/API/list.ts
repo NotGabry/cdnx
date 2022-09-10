@@ -15,7 +15,8 @@ export default async (req: Request, res: Response): Promise<Response> => {
                 ID: e.ID,
                 URL: `${process.env.CDN}/files/${e.ID}`,
                 Time: e.Time,
-                TimeFormatted: moment.unix(Number(e.Time) / 1000).format('ddd DD MMM YYYY, hh:mm:ss A')
+                TimeFormatted: moment.unix(Number(e.Time) / 1000).format('ddd DD MMM YYYY, hh:mm:ss A'),
+                Cached: e.Cached ? true : false
             })
         })
         return res.json(response)

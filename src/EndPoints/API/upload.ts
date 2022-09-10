@@ -25,15 +25,17 @@ export default async (req: Request, res: Response): Promise<Response> => {
         await CDN.create({
             ID: name,
             Data: req.body.Data,
-            Time: new Date().getTime()
+            Time: new Date().getTime(),
+            Cached: false
         })
         
-        await res.json({ success: `Another file had the name [${req.body.ID}], the new file name is [${name}]`, URL: `${process.env.CDN}/files/${name}` })
+        await res.json({ success: `Another file has the name [${req.body.ID}], the new file was uploaded as [${name}]`, URL: `${process.env.CDN}/files/${name}` })
     } else {
         await CDN.create({
             ID: name,
             Data: req.body.Data,
-            Time: new Date().getTime()
+            Time: new Date().getTime(),
+            Cached: false
         })
 
         await res.json({ success: 'The file was uploaded.', URL: `${process.env.CDN}/files/${name}` })
