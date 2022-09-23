@@ -4,6 +4,7 @@ export interface cdnInterface extends Document {
     ID: string,
     Data: string,
     Time: string,
-    Cached: boolean
+    Cached: boolean,
+    RequestedTimes: number
 }
 

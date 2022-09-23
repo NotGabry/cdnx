@@ -26,7 +26,8 @@ export default async (req: Request, res: Response): Promise<Response> => {
             ID: name,
             Data: req.body.Data,
             Time: new Date().getTime(),
-            Cached: false
+            Cached: false,
+            RequestedTimes: 0
         })
         
         await res.json({ success: `Another file has the name [${req.body.ID}], the new file was uploaded as [${name}]`, URL: `${process.env.CDN}/files/${name}` })
@@ -35,7 +36,8 @@ export default async (req: Request, res: Response): Promise<Response> => {
             ID: name,
             Data: req.body.Data,
             Time: new Date().getTime(),
-            Cached: false
+            Cached: false,
+            RequestedTimes: 0
         })
 
         await res.json({ success: 'The file was uploaded.', URL: `${process.env.CDN}/files/${name}` })

@@ -14,10 +14,16 @@ export default async (req: Request, res: Response): Promise<Response> => {
         await readFile(`./Data/${String(req.params.ID)}`, async (err: Error, data_: Buffer) => {
             if (err) {
                 data.Cached = true
+                if (data.RequestedTimes) data.RequestedTimes++
+                else data.RequestedTimes = 1
                 await data.save()
                 await writeFileSync(`./Data/${String(req.params.ID)}`, String(data.Data), { encoding: 'base64' })
                 return res.sendFile(path.join(path.resolve('.'), 'Data', String(req.params.ID)))
-            } else res.sendFile(path.join(path.resolve('.'), 'Data', String(req.params.ID)))
+            } else {
+                data.RequestedTimes++
+                await data.save()
+                res.sendFile(path.join(path.resolve('.'), 'Data', String(req.params.ID)))
+            }
         })
     } else return res.json({ error: 'No Data Found.'})
 }

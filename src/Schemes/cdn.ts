@@ -4,7 +4,8 @@ const cdn = new Schema({
     ID: String,
     Data: String,
     Time: String,
-    Cached: Boolean
+    Cached: Boolean,
+    RequestedTimes: Number
 })
 
 const model_ = model('files', cdn)
