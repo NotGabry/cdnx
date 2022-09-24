@@ -3,7 +3,7 @@
 # `cdn.gabry.ga`
 
 
-## 🍬 My Custom Content Delivery Network
+### 🍬 My Custom Content Delivery Network
 
 </div>
 
