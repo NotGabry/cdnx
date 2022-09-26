@@ -6,7 +6,7 @@ export default async (): Promise<void> => {
     let hour: number = new Date().getHours()
     let minute: number = new Date().getMinutes()
 
-    if (hour == 17 && minute == 0) {
+    if (hour == 18 && minute == 0) {
         let files = await readdirSync('./Data')
         for (let file of files) {
             let db: cdnInterface = await CDN.findOne({ ID: file })
